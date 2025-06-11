@@ -1,8 +1,9 @@
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
+  error?: string;
 };
 
-export default function Input({ label, ...props }: InputProps) {
+export default function Input({ label, error, ...props }: InputProps) {
   return (
     <div className="w-full mb-4">
       {label && (
@@ -17,6 +18,7 @@ export default function Input({ label, ...props }: InputProps) {
         {...props}
         className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
+      {error && <span className="text-red-500 text-sm mt-1 block">{error}</span>}
     </div>
   );
 }
