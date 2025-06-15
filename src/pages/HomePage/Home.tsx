@@ -1,14 +1,18 @@
-import PrimaryButton from "../../components/Buttons/PrimaryButton";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import SignupPage from "./Components/FormSignup";
+import { DrawerDialogDemo } from "./Components/FormSignup";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 export default function HomePage() {
-  const [isSignupOpen, setIsSignupOpen] = useState(false);
+    const [open, setOpen] = useState(false);
 
   const handleNavigate = () => {
-    setIsSignupOpen(true);
-  }
+    setOpen(true);  // Abrir o dialog/drawer ao clicar no botão
+  };
+
+  const handleClose = () => {
+    setOpen(false);  // Fechar o dialog/drawer
+  };
 
 
   return (
@@ -35,12 +39,14 @@ export default function HomePage() {
                 </p>
 
                 <div>
-                  <PrimaryButton
+                  <Button
                     onClick={handleNavigate}
+                    size={"lg"}
+                    className='bg-blue-500 hover:bg-blue-600 cursor-pointer '
                   >
                     Começar agora
-                    <ArrowForwardIcon className="ml-2 h-4 w-4" />
-                  </PrimaryButton>
+                    <ArrowForwardIcon fontSize='small' />
+                  </Button>
                 </div>
               </div>
             </div>
@@ -56,10 +62,7 @@ export default function HomePage() {
         />
       </div>
 
-      <SignupPage
-        isOpen={isSignupOpen}
-        onClose={() => setIsSignupOpen(false)}
-      />
+      <DrawerDialogDemo isOpen={open} onClose={handleClose} />
     </div>
   )
 }

@@ -1,10 +1,22 @@
 import { useForm } from "react-hook-form";
-import Input from "../../../components/Input/Input";
-import PrimaryButton from "../../../components/Buttons/PrimaryButton";
-import SecondaryButton from "../../../components/Buttons/SecondaryButton";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
+import { DialogTitle } from "@radix-ui/react-dialog";
+import { Drawer } from "vaul";
+import { DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
+import { useMediaQuery } from 'react-responsive'
 
 const signupSchema = z.object({
   name: z.string().min(1, "Nome é obrigatório"),
@@ -18,76 +30,128 @@ const signupSchema = z.object({
 
 type SignupFormDataSchema = z.infer<typeof signupSchema>;
 
-export default function SignupPage({ isOpen, onClose }: { isOpen: boolean; onClose: () => void; }) {
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<SignupFormDataSchema>({
+type DialogFormProps = {
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+export function DrawerDialogDemo({ isOpen, onClose }: DialogFormProps) {
+
+  const isDesktop = useMediaQuery({ query: '(min-width: 768px)' });
+
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      onClose()
+    }
+  };
+
+  if (isDesktop) {
+    return (
+      <Dialog open={isOpen} onOpenChange={handleOpenChange}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle className="text-gray-600 text-center">Criar Conta</DialogTitle>
+          </DialogHeader>
+          <SignupForm />
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
+  return (
+    <Drawer.Root open={isOpen} onOpenChange={handleOpenChange}>
+      <DrawerContent>
+        <DrawerHeader className="text-left">
+          <DrawerTitle>Criar Conta</DrawerTitle>
+        </DrawerHeader>
+        <SignupForm />
+        <DrawerFooter className="pt-2">
+          <DrawerClose asChild>
+            <Button variant="outline" size={"sm"} className="w-[80%] flex m-auto">Cancelar</Button>
+          </DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer.Root>
+  );
+}
+
+export default function SignupForm() {
+  const form = useForm<SignupFormDataSchema>({
     resolver: zodResolver(signupSchema),
-  })
+  });
   const navigate = useNavigate();
 
-  const handleCreatAccount = (data: SignupFormDataSchema) => {
+  function onSubmit(data: SignupFormDataSchema) {
     console.log(data);
     navigate("/dashboard");
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="w-full absolute z-20 h-full bg-black/50 flex items-center justify-center max-w-[1400px] m-auto">
-      <form
-        onSubmit={handleSubmit(handleCreatAccount)}
-        className="bg-white p-5  rounded-lg w-[90%] max-w-md"
-      >
-        <h4 className="text-3xl text-gray-600 pb-5 text-center">SignUp</h4>
-        <Input
-          type="text"
-          label="Nome"
-          placeholder="Digite seu nome"
-          {...register("name")}
-          error={errors.name?.message}
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 bg-white rounded-lg p-3">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-gray-600">Nome</FormLabel>
+              <FormControl>
+                <Input placeholder="Digite seu nome" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
 
-        <Input
-          type="email"
-          label="E-mail"
-          placeholder="Digite seu e-mail"
-          {...register("email")}
-          error={errors.email?.message}
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="Digite seu email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
 
-        <Input
-          type="password"
-          label="Senha"
-          placeholder="Digite sua senha"
-          {...register("password")}
-          error={errors.password?.message}
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Senha</FormLabel>
+              <FormControl>
+                <Input type="password" placeholder="Senha" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
 
-        <Input
-          type="password"
-          label="Confirmação de Senha"
-          placeholder="Digite sua senha novamente"
-          {...register("passwordConfirmation")}
-          error={errors.passwordConfirmation?.message}
+        <FormField
+          control={form.control}
+          name="passwordConfirmation"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Confirmação de Senha</FormLabel>
+              <FormControl>
+                <Input type="password" placeholder="Confirme a senha" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-
-        <div className="flex flex-col mt-6 gap-4 md:flex-row md:justify-around">
-          <SecondaryButton
-            onClick={() => {
-              onClose()
-              reset()
-            }}
-            className="md:w-[40%]"
-          >
-            Cancelar
-          </SecondaryButton>
-
-          <PrimaryButton
-            className="md:w-[40%]"
-          >
-            Salvar
-          </PrimaryButton>
-        </div>
+        <Button
+          size={"sm"}
+          className='bg-blue-500 hover:bg-blue-600 cursor-pointer w-[80%] flex m-auto'
+          type="submit"
+        >
+          Salvar
+        </Button>
       </form>
-    </div>
+    </Form>
   )
 }
