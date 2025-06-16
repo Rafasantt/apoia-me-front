@@ -19,13 +19,8 @@ import { DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle } f
 import { useMediaQuery } from 'react-responsive'
 
 const signupSchema = z.object({
-  name: z.string().min(1, "Nome é obrigatório"),
   email: z.string().email("E-mail inválido").min(1, "E-mail é obrigatório"),
   password: z.string().min(6, "Senha deve ter pelo menos 6 caracteres"),
-  passwordConfirmation: z.string(),
-}).refine((data) => data.password === data.passwordConfirmation, {
-  path: ["passwordConfirmation"],
-  message: "As senhas não são identicas",
 })
 
 type SignupFormDataSchema = z.infer<typeof signupSchema>;
@@ -35,7 +30,7 @@ type DialogFormProps = {
   onClose: () => void;
 };
 
-export function DrawerDialogDemo({ isOpen, onClose }: DialogFormProps) {
+export function DrawerDialogLogin({ isOpen, onClose }: DialogFormProps) {
 
   const isDesktop = useMediaQuery({ query: '(min-width: 768px)' });
 
@@ -50,9 +45,9 @@ export function DrawerDialogDemo({ isOpen, onClose }: DialogFormProps) {
       <Dialog open={isOpen} onOpenChange={handleOpenChange}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle className="text-gray-600 text-center">Criar Conta</DialogTitle>
+            <DialogTitle className="text-gray-600 text-center">Login</DialogTitle>
           </DialogHeader>
-          <SignupForm />
+          <LoginForm />
         </DialogContent>
       </Dialog>
     );
@@ -62,12 +57,12 @@ export function DrawerDialogDemo({ isOpen, onClose }: DialogFormProps) {
     <Drawer.Root open={isOpen} onOpenChange={handleOpenChange}>
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle>Criar Conta</DrawerTitle>
+          <DrawerTitle>Login</DrawerTitle>
         </DrawerHeader>
-        <SignupForm />
+        <LoginForm />
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
-            <Button variant="outline" size={"sm"} className="w-[100%] flex m-auto">Cancelar</Button>
+            <Button variant="outline" size={"sm"} className="w-[80%] flex m-auto">Cancelar</Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
@@ -75,7 +70,7 @@ export function DrawerDialogDemo({ isOpen, onClose }: DialogFormProps) {
   );
 }
 
-export default function SignupForm() {
+export default function LoginForm() {
   const form = useForm<SignupFormDataSchema>({
     resolver: zodResolver(signupSchema),
   });
@@ -89,20 +84,6 @@ export default function SignupForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 bg-white rounded-lg p-3">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-gray-600">Nome</FormLabel>
-              <FormControl>
-                <Input placeholder="Digite seu nome" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <FormField
           control={form.control}
           name="email"
@@ -130,26 +111,13 @@ export default function SignupForm() {
             </FormItem>
           )}
         />
-
-        <FormField
-          control={form.control}
-          name="passwordConfirmation"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Confirmação de Senha</FormLabel>
-              <FormControl>
-                <Input type="password" placeholder="Confirme a senha" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        
         <Button
           size={"sm"}
           className='bg-blue-500 hover:bg-blue-600 cursor-pointer w-[100%] flex m-auto'
           type="submit"
         >
-          Salvar
+          Entrar
         </Button>
       </form>
     </Form>

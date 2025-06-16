@@ -1,7 +1,8 @@
 
 // import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../../../components/Table/Table"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/table/Table"
 
 
 
@@ -19,20 +20,20 @@ export function DonationTable() {
   return (
     <>
       {/* Versão para desktop */}
-      <div className="hidden lg:block">
+      <div className="hidden lg:block text-gray-500 p-5">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="font-semibold text-black">Nome do doador</TableHead>
-              <TableHead className="font-semibold text-black">Mensagem</TableHead>
-              <TableHead className="text-center font-semibold text-black">Valor</TableHead>
-              <TableHead className="text-center font-semibold text-black">Data da doação</TableHead>
+              <TableHead className="font-semibold text-gray-600">Nome do doador</TableHead>
+              <TableHead className="font-semibold text-gray-600">Mensagem</TableHead>
+              <TableHead className="text-center font-semibold text-gray-600">Valor (R$)</TableHead>
+              <TableHead className="text-center font-semibold text-gray-600">Data da doação</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {donations.map((donation) => (
               <TableRow key={donation.id}>
-                <TableCell className="font-medium">{donation.donorName}</TableCell>
+                <TableCell className="">{donation.donorName}</TableCell>
                 <TableCell className="max-w-72">{donation.donorMessage}</TableCell>
                 <TableCell className="text-center">
                   {donation.amount}
@@ -47,7 +48,7 @@ export function DonationTable() {
       </div>
 
       {/* Versão para mobile */}
-      {/* <div className="lg:hidden space-y-4">
+      <div className="lg:hidden space-y-4 w-[90%] m-auto mb-8 pt-5">
         {donations.map((donation) => (
           <Card key={donation.id}>
             <CardHeader>
@@ -66,7 +67,7 @@ export function DonationTable() {
             </CardContent>
           </Card>
         ))}
-      </div> */}
+      </div>
     </>
   )
 }

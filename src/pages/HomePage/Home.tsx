@@ -1,10 +1,13 @@
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import LoginRoundedIcon from '@mui/icons-material/LoginRounded';
 import { DrawerDialogDemo } from "./Components/FormSignup";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { DrawerDialogLogin } from './Components/FormLogin';
 
 export default function HomePage() {
     const [open, setOpen] = useState(false);
+    const [openLogin, setOpenLogin] = useState(false)
 
   const handleNavigate = () => {
     setOpen(true);  // Abrir o dialog/drawer ao clicar no botão
@@ -12,6 +15,14 @@ export default function HomePage() {
 
   const handleClose = () => {
     setOpen(false);  // Fechar o dialog/drawer
+  };
+
+    const handleLogin = () => {
+    setOpenLogin(true);  // Abrir o dialog/drawer ao clicar no botão
+  };
+
+  const handleCloseLogin = () => {
+    setOpenLogin(false);  // Fechar o dialog/drawer
   };
 
 
@@ -55,6 +66,11 @@ export default function HomePage() {
       </div>
 
       <div className="hidden md:block md:w-[45%] min-h-screen relative">
+        <span onClick={handleLogin}
+        className='absolute right-0 text-md mx-auto py-1 px-4 font-bold text-white cursor-pointer'>
+          Login
+          <LoginRoundedIcon className='ml-1' fontSize='small'/>
+          </span>
         <img
           className="md:w-full h-screen min-w-[400px]"
           src="./BgTeste.png"
@@ -63,6 +79,7 @@ export default function HomePage() {
       </div>
 
       <DrawerDialogDemo isOpen={open} onClose={handleClose} />
+      <DrawerDialogLogin isOpen={openLogin} onClose={handleCloseLogin}/>
     </div>
   )
 }
