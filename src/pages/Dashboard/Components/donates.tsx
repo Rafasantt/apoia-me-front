@@ -2,16 +2,16 @@
 // import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/table/Table"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/table/table"
 
 
 
 const donations = [
   {
     id: "1",
-    donorName: "João Silva",
-    donorMessage: "Adoro seu trabalho!",
-    amount: 1000,
+    donorName: "Teste",
+    donorMessage: "Mensagem teste!",
+    amount: 100,
     createdAt: new Date("2023-10-01T12:00:00Z"),
   },
 ]
@@ -39,7 +39,7 @@ export function DonationTable() {
                   {donation.amount}
                 </TableCell>
                 <TableCell className="text-center">
-                  {donation.createdAt.toDateString()}
+                  {donation.createdAt.toLocaleDateString('pt-BR')}
                 </TableCell>
               </TableRow>
             ))}

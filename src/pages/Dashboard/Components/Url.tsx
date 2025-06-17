@@ -16,7 +16,7 @@ type DialogFormProps = {
 
 export function DrawerDialogUrl({ isOpen, onClose }: DialogFormProps) {
   const url = import.meta.env.VITE_BASE_URL;
-  const shareLink = `${url}doacao/seuid`
+  const shareLink = `${url}donation/userId`
   const [statusMsg, setStatusMsg] = useState<'success' | 'error' | null>(null);
 
   const isDesktop = useMediaQuery({ query: '(min-width: 768px)' });
@@ -31,11 +31,11 @@ export function DrawerDialogUrl({ isOpen, onClose }: DialogFormProps) {
     try {
       await navigator.clipboard.writeText(shareLink);
       setStatusMsg('success')
-      setTimeout(() => setStatusMsg(null), 3000);
+      setTimeout(() => [onClose(), setStatusMsg(null)], 3000);
     } catch (err) {
       console.error("Erro ao copiar:", err);
       setStatusMsg('error');
-      setTimeout(() => setStatusMsg(null), 3000);
+      setTimeout(() => [onClose(), setStatusMsg(null)], 3000);
     }
   };
 

@@ -40,7 +40,7 @@ export default function DashboardPage() {
 
             <span className='cursor-pointer' onClick={handleLogout}>
               Sair
-              <LogoutRoundedIcon className="ml-1" fontSize='small' />
+              <LogoutRoundedIcon className="ml-1" fontSize='inherit' />
             </span>
           </div>
         </div>
