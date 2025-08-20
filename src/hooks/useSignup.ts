@@ -3,7 +3,7 @@ import type { SignupType } from '@/types/Signup'
 import { useState } from 'react'
 
 export const useSignup = () => {
-  const [createAccessToken, setCreatedAccessToken] = useState<number | null>(
+  const [createUrl] = useState<string | null>(
     null
   )
   const [error, setError] = useState<string | null>(null)
@@ -20,10 +20,8 @@ export const useSignup = () => {
       }
 
       const response = await signup(payLoad)
-      if (response?.accessToken) {
-        localStorage.setItem('accessToken', response.accessToken)
-        setCreatedAccessToken(response.accessToken)
-      }
+      console.log(response.url)
+      return response.url; // Assuming the response contains a URL
     } catch (err: unknown) {
       if (err && typeof err === "object" && "response" in err) {
         const axiosErr = err as { response?: { data?: { error?: string } } }
@@ -37,7 +35,7 @@ export const useSignup = () => {
   }
 
   return {
-    createAccessToken,
+    createUrl,
     error,
     loading,
     newSignup,

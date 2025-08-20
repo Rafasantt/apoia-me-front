@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-// import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button"
@@ -82,11 +81,12 @@ export default function SignupForm() {
   const form = useForm<SignupFormDataSchema>({
     resolver: zodResolver(signupSchema),
   });
-  // const navigate = useNavigate();
 
   async function onSubmit(data: SignupFormDataSchema) {
-    await newSignup(data);
-    //navigate("/dashboard");
+    const url = await newSignup(data);
+    if (url){
+      window.location.href = url;
+    }
   };
 
   return (
