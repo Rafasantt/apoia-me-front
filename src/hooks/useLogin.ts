@@ -15,7 +15,8 @@ const [accessToken] = useState<string | null>(
       setError(null)
 
       const response = await login(data)
-      localStorage.setItem("accessToken", response.accessToken);
+      localStorage.setItem("accessToken", response.userData.accessToken);
+      localStorage.setItem("userId", response.userData.accountId);
       return response; // Assuming the response contains a URL
     } catch (err: unknown) {
       if (err && typeof err === "object" && "response" in err) {

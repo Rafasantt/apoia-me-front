@@ -16,7 +16,7 @@ type DialogFormProps = {
 
 export function DrawerDialogUrl({ isOpen, onClose }: DialogFormProps) {
   const url = import.meta.env.VITE_BASE_URL;
-  const shareLink = `${url}donation/userId`
+  const shareLink = `${url}donation/${localStorage.getItem("userId")}`;
   const [statusMsg, setStatusMsg] = useState<'success' | 'error' | null>(null);
 
   const isDesktop = useMediaQuery({ query: '(min-width: 768px)' });

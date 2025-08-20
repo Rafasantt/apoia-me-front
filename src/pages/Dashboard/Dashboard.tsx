@@ -25,7 +25,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className='w-full max-w-[1400px] m-auto'>
+    <div className='w-full max-w-[2000px] m-auto'>
       <DrawerDialogUrl isOpen={open} onClose={handleClose} />
       <header className=" mx-auto bg-blue-500 py-1 px-4">
         <div className="flex justify-between items-center p-3">
