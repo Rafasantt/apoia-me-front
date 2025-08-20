@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button"
@@ -17,6 +17,7 @@ import { DialogTitle } from "@radix-ui/react-dialog";
 import { Drawer } from "vaul";
 import { DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import { useMediaQuery } from 'react-responsive'
+import { useSignup } from "@/hooks/useSignup";
 
 const signupSchema = z.object({
   name: z.string().min(1, "Nome é obrigatório"),
@@ -76,14 +77,16 @@ export function DrawerDialogDemo({ isOpen, onClose }: DialogFormProps) {
 }
 
 export default function SignupForm() {
+  const { loading, newSignup } = useSignup()
+
   const form = useForm<SignupFormDataSchema>({
     resolver: zodResolver(signupSchema),
   });
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  function onSubmit(data: SignupFormDataSchema) {
-    console.log(data);
-    navigate("/dashboard");
+  async function onSubmit(data: SignupFormDataSchema) {
+    await newSignup(data);
+    //navigate("/dashboard");
   };
 
   return (
@@ -149,7 +152,7 @@ export default function SignupForm() {
           className='bg-blue-500 hover:bg-blue-600 cursor-pointer w-[100%] flex m-auto'
           type="submit"
         >
-          Salvar
+          {loading ? "Cadastrando..." : "Cadastrar"}
         </Button>
       </form>
     </Form>

@@ -2,7 +2,7 @@
 // import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/table/table"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/Table/Table"
 
 
 
