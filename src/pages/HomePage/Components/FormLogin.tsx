@@ -17,6 +17,7 @@ import { DialogTitle } from "@radix-ui/react-dialog";
 import { Drawer } from "vaul";
 import { DrawerClose, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle } from "@/components/ui/drawer";
 import { useMediaQuery } from 'react-responsive'
+import { useLogin } from "@/hooks/useLogin";
 
 const signupSchema = z.object({
   email: z.string().email("E-mail inválido").min(1, "E-mail é obrigatório"),
@@ -71,14 +72,18 @@ export function DrawerDialogLogin({ isOpen, onClose }: DialogFormProps) {
 }
 
 export default function LoginForm() {
+  const { loading, newLogin } = useLogin()
+
   const form = useForm<SignupFormDataSchema>({
     resolver: zodResolver(signupSchema),
   });
   const navigate = useNavigate();
 
-  function onSubmit(data: SignupFormDataSchema) {
-    console.log(data);
-    navigate("/dashboard");
+  async function onSubmit(data: SignupFormDataSchema) {
+    const accessToken = await newLogin(data);
+    if (accessToken) {
+      navigate("/dashboard");
+    }
   };
 
   return (
@@ -117,7 +122,7 @@ export default function LoginForm() {
           className='bg-blue-500 hover:bg-blue-600 cursor-pointer w-[100%] flex m-auto'
           type="submit"
         >
-          Entrar
+          {loading ? "..." : "Entrar"}
         </Button>
       </form>
     </Form>
