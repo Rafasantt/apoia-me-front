@@ -1,23 +1,21 @@
-import { login } from '@/services/login'
-import type { LoginType } from '@/types/Login'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { donation } from '@/services/donation'
 import { useState } from 'react'
 
-export const useLogin = () => {
-const [accessToken] = useState<string | null>(
+export const useDonation = () => {
+const [sessionId] = useState<string | null>(
     null
   )
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
-  const newLogin = async (data: LoginType) => {
+  const newSessionId = async (data: any) => {
     try {
       setLoading(true)
       setError(null)
 
-      const response = await login(data)
-      console.log(response)
-      localStorage.setItem("accessToken", response.userData.accessToken);
-      localStorage.setItem("slug", response.userData.slug);
+      const response = await donation(data)
+      console.log("Response from donation service:", response)
       return response; // Assuming the response contains a URL
     } catch (err: unknown) {
       if (err && typeof err === "object" && "response" in err) {
@@ -32,9 +30,9 @@ const [accessToken] = useState<string | null>(
   }
 
   return {
-    accessToken,
+    sessionId,
     error,
     loading,
-    newLogin,
+    newSessionId,
   }
 }

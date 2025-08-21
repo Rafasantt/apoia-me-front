@@ -2,7 +2,7 @@ import FormDonation from "./Components/FormDonation";
 
 export default function Donation() {
   return (
-    <div className="flex w-full min-h-screen bg-gradient-to-b from-white to-gray-50 max-w-[1400px] m-auto">
+    <div className="flex w-full min-h-screen bg-gradient-to-b from-white to-gray-50 max-w-[2000px] m-auto">
       <div className="hidden md:block md:w-[45%] min-h-screen relative">
         <img
           className="md:w-full h-screen min-w-[400px]"
