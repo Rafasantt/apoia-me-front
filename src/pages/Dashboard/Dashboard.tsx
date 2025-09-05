@@ -5,12 +5,18 @@ import WalletRoundedIcon from '@mui/icons-material/WalletRounded'
 import { DonationTable } from './Components/donates'
 import DashboardCard from './Components/Card'
 import { DrawerDialogUrl } from './Components/Url'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useGetData } from '@/hooks/useGetData'
 
 export default function DashboardPage() {
   const [open, setOpen] = useState(false)
+  const { accounData, getAccountData } = useGetData()
   const navigate = useNavigate()
+
+  useEffect(() => {
+      getAccountData()
+  }, [])
 
   const handleShowDialog = () => {
     setOpen(true)
@@ -22,7 +28,9 @@ export default function DashboardPage() {
 
   const handleLogout = () => {
     navigate('/')
+    localStorage.clear()
   }
+
 
   return (
     <div className='w-full max-w-[2000px] m-auto'>

@@ -20,7 +20,6 @@ export const useSignup = () => {
       }
 
       const response = await signup(payLoad)
-      console.log(response.url)
       return response.url; // Assuming the response contains a URL
     } catch (err: unknown) {
       if (err && typeof err === "object" && "response" in err) {

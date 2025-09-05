@@ -15,7 +15,6 @@ const [sessionId] = useState<string | null>(
       setError(null)
 
       const response = await donation(data)
-      console.log("Response from donation service:", response)
       return response; // Assuming the response contains a URL
     } catch (err: unknown) {
       if (err && typeof err === "object" && "response" in err) {

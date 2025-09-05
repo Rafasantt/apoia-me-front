@@ -15,7 +15,6 @@ const [accessToken] = useState<string | null>(
       setError(null)
 
       const response = await login(data)
-      console.log(response)
       localStorage.setItem("accessToken", response.userData.accessToken);
       localStorage.setItem("slug", response.userData.slug);
       return response; // Assuming the response contains a URL
