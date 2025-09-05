@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getData } from '@/services/getAccountData'
+import type { AccountWithDonationsModel } from '@/types/Account'
 import { useState } from 'react'
 
 export const useGetData = () => {
-  const [accounData, setAccountData] = useState([])
+  const [accounData, setAccountData] = useState<AccountWithDonationsModel | null >(null)
   const [error, setError] = useState<string | null>(null)
 
   const getAccountData = async () => {

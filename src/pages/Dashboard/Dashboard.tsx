@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded'
 import PeopleOutlineRoundedIcon from '@mui/icons-material/PeopleOutlineRounded'
 import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded'
@@ -17,6 +18,10 @@ export default function DashboardPage() {
   useEffect(() => {
       getAccountData()
   }, [])
+
+  const paidDonations = accounData?.donations?.filter(
+    (donationsAccount: any) => donationsAccount.status === 'paid'
+  ) ?? []
 
   const handleShowDialog = () => {
     setOpen(true)
